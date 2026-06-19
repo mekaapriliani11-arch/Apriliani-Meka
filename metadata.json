@@ -1,0 +1,6 @@
+{
+  "name": "Meka Hijab Store",
+  "description": "Toko Hijab Online Meka dengan produk hijab berkualitas tinggi, harga terjangkau, dan checkout transaksi instan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
