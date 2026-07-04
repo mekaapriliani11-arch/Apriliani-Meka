@@ -15,6 +15,10 @@ import FavoritesSidebar from './components/FavoritesSidebar';
 import CheckoutModal from './components/CheckoutModal';
 import InvoiceDetail from './components/InvoiceDetail';
 import OrderHistory from './components/OrderHistory';
+import TestimonialsSection from './components/TestimonialsSection';
+import SocialProofTicker from './components/SocialProofTicker';
+// @ts-ignore
+import mekaHijabBanner from './assets/images/meka_hijab_banner_1781858337929.jpg';
 
 export default function App() {
   // Persistence Loading state
@@ -257,15 +261,14 @@ export default function App() {
               </div>
 
               {/* Little interactive preview element inside hero banner */}
-              <div className="bg-gradient-to-tr from-rose-100 to-pink-200 h-40 rounded-2xl p-4 flex items-center justify-center relative overflow-hidden group">
-                {/* Embedded SVG mockup */}
-                <svg viewBox="0 0 100 120" className="w-28 h-28 drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M50 32 C41 32 37 42 37 50 C37 58 41 64 50 64 C59 64 63 58 63 50 C63 42 59 32 50 32 Z" fill="#FFEAEB" />
-                  <path d="M38 45 C43 38 57 38 62 45 C56 42 44 42 38 45 Z" fill="#7D6F6F" opacity="0.75" />
-                  <path d="M50 22 C34 22 28 36 28 52 C28 59 31 66 35 70 C35 70 38 55 50 55 C62 55 65 70 65 70 C69 66 72 59 72 52 C72 36 66 22 50 22 Z" fill="#E1A2B8" /> {/* Dusty Pink */}
-                  <path d="M37 50 C37 55 42 66 50 66 C58 66 63 55 63 50 C63 50 54 62 50 62 C46 62 37 50 37 50 Z" fill="#E1A2B8" filter="brightness(0.92)" />
-                  <path d="M32 68 C32 68 35 106 50 106 C65 106 68 68 68 68 C68 68 59 88 50 88 C41 88 32 68 32 68 Z" fill="#E1A2B8" filter="brightness(0.97)" />
-                </svg>
+              <div className="bg-gradient-to-tr from-rose-100 to-pink-200 h-40 rounded-2xl relative overflow-hidden group shadow-inner border border-pink-100">
+                <img
+                  src={mekaHijabBanner}
+                  alt="Meka Hijab Premium Collection"
+                  className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/25 to-transparent pointer-events-none" />
               </div>
 
               <div className="flex items-center justify-between text-xs pt-1">
@@ -395,6 +398,9 @@ export default function App() {
         )}
 
       </main>
+
+      {/* Testimonials section showcasing customer reviews with avatars */}
+      <TestimonialsSection />
 
       {/* Helpful FAQ / Customer service section */}
       <section className="bg-pink-50/20 py-12 border-t border-pink-100/50" id="customer-info-faq">
@@ -554,6 +560,9 @@ export default function App() {
           }}
         />
       )}
+
+      {/* Floating real-time purchase social proof ticker toast */}
+      <SocialProofTicker />
 
     </div>
   );

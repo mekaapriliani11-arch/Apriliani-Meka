@@ -3,6 +3,7 @@ export type Category = 'Semua' | 'Pashmina' | 'Voal' | 'Segi Empat' | 'Instan' |
 export interface ProductColor {
   name: string;
   hex: string;
+  image?: string;
 }
 
 export interface Product {
@@ -17,6 +18,7 @@ export interface Product {
   size: string;
   colors: ProductColor[];
   image: string; // Tailwind color grade or placeholder illustration background
+  realImage?: string; // High-quality actual photo path
   features: string[];
   stock: number;
   badge?: string;

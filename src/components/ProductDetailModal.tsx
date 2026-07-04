@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Star, ShoppingBag, Truck, BadgePercent, Heart } from 'lucide-react';
+import { X, Star, ShoppingBag, Truck, BadgePercent, Heart, MessageCircle } from 'lucide-react';
 import { Product, ProductColor } from '../types';
 import { formatRupiah } from '../data';
 import { HijabIcon } from './ProductCard';
@@ -65,18 +65,50 @@ export default function ProductDetailModal({
           </button>
 
           {/* Left panel: dynamic preview banner */}
-          <div className={`w-full md:w-1/2 min-h-[320px] md:min-h-[460px] ${product.image} flex flex-col items-center justify-center p-8 relative`}>
-            {/* Visual sparkles */}
-            <div className="absolute top-12 left-12 w-16 h-16 bg-white/20 rounded-full blur-lg animate-pulse" />
-            <div className="absolute bottom-12 right-12 w-20 h-20 bg-rose-200/20 rounded-full blur-xl" />
+          <div className="w-full md:w-1/2 min-h-[320px] md:min-h-[460px] bg-slate-50 relative overflow-hidden flex flex-col items-center justify-center p-8">
+            {selectedColor.image || product.realImage ? (
+              <img
+                src={selectedColor.image || product.realImage}
+                alt={product.name}
+                className="absolute inset-0 w-full h-full object-cover"
+                referrerPolicy="no-referrer"
+              />
+            ) : (
+              <div className={`absolute inset-0 ${product.image}`} />
+            )}
             
-            <div className="w-56 h-64 flex items-center justify-center">
-              <HijabIcon color={selectedColor.hex} />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+
+            {/* Floating Picture-In-Picture for 3D color mockup */}
+            <div className="relative z-10 w-44 h-48 bg-white/95 backdrop-blur-md rounded-3xl p-3 shadow-2xl border border-pink-100 flex flex-col items-center justify-center mb-2 overflow-hidden">
+              <div className="w-full h-32 flex items-center justify-center overflow-hidden rounded-2xl bg-slate-50 border border-pink-50">
+                {selectedColor.image ? (
+                  <img
+                    src={selectedColor.image}
+                    alt={selectedColor.name}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : product.realImage ? (
+                  <img
+                    src={product.realImage}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <HijabIcon color={selectedColor.hex} />
+                )}
+              </div>
+              <div className="mt-2.5 px-2.5 py-0.5 bg-pink-100/60 rounded-full text-[10px] text-pink-700 font-semibold truncate max-w-full">
+                Warna: {selectedColor.name}
+              </div>
             </div>
 
-            {/* Hint message */}
-            <div className="mt-4 px-4 py-1.5 bg-white/30 backdrop-blur-md rounded-full text-[11px] text-pink-900 font-medium">
-              Warna Mockup: <strong className="font-bold">{selectedColor.name}</strong>
+            {/* Hint message overlay relative to image container bottom */}
+            <div className="relative z-10 mt-auto px-4 py-1.5 bg-black/40 text-white rounded-full text-[10px] font-medium backdrop-blur-xs flex items-center gap-1.5 border border-white/15">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Foto Realistis Produk Meka
             </div>
           </div>
 
@@ -91,6 +123,11 @@ export default function ProductDetailModal({
                 {product.badge && (
                   <span className="px-2 py-0.5 text-[9px] font-bold text-white bg-pink-500 rounded-md">
                     {product.badge}
+                  </span>
+                )}
+                {product.stock < 5 && (
+                  <span className="px-2 py-0.5 text-[9px] font-black uppercase text-white bg-red-600 rounded-md animate-pulse">
+                    Stok Terbatas
                   </span>
                 )}
               </div>
@@ -186,9 +223,15 @@ export default function ProductDetailModal({
                   <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mb-1">
                     Jumlah Pembelian
                   </span>
-                  <span className="text-[11px] text-pink-500 font-bold">
-                    Tersedia {product.stock} pcs di gudang
-                  </span>
+                   {product.stock < 5 ? (
+                    <span className="text-[11px] text-red-600 font-extrabold animate-pulse block">
+                      ⚠️ Stok Terbatas! Sisa {product.stock} pcs
+                    </span>
+                  ) : (
+                    <span className="text-[11px] text-pink-500 font-bold">
+                      Tersedia {product.stock} pcs di gudang
+                    </span>
+                  )}
                 </div>
 
                 <div className="flex items-center border border-pink-200 rounded-xl overflow-hidden bg-white shadow-xs">
@@ -213,16 +256,35 @@ export default function ProductDetailModal({
               </div>
             </div>
 
-            {/* Add to bag triggering */}
-            <div className="flex gap-2">
+            {/* Add to bag and WhatsApp triggering */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <button
                 id="btn-modal-add-to-cart"
                 onClick={handleAddToCart}
                 className="flex-1 py-3 px-6 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-sm shadow-md shadow-pink-100 hover:shadow-lg hover:shadow-pink-200 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <ShoppingBag size={18} />
-                <span>Masukkan {quantity} Item Ke Keranjang</span>
+                <span>Masukkan {quantity} Item</span>
               </button>
+
+              <a
+                id="btn-modal-whatsapp-inquiry"
+                href={`https://wa.me/6281234567890?text=${encodeURIComponent(
+                  `Assalamualaikum Admin Meka Hijab, saya tertarik dengan produk berikut:\n\n` +
+                  `🌸 *Hijab:* ${product.name}\n` +
+                  `🎨 *Warna:* ${selectedColor.name}\n` +
+                  `📐 *Ukuran:* ${product.size}\n` +
+                  `💰 *Harga:* ${formatRupiah(product.price)}\n` +
+                  `🛍️ *Jumlah:* ${quantity} pcs\n\n` +
+                  `Apakah stok produk ini masih terpelihara? Terima kasih!`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="py-3 px-5 rounded-2xl bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md shadow-emerald-100 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+              >
+                <MessageCircle size={18} className="fill-current text-white" />
+                <span>Tanya Admin via WA</span>
+              </a>
             </div>
           </div>
         </div>

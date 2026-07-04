@@ -83,11 +83,16 @@ export default function ProductCard({
             {product.badge}
           </span>
         )}
-        {product.stock <= 15 && (
+        {product.stock < 5 ? (
+          <span className="px-3 py-1 text-[10px] font-extrabold tracking-wider uppercase text-white bg-red-600 rounded-full shadow-xs animate-pulse flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-white"></span>
+            Stok Terbatas ({product.stock})
+          </span>
+        ) : product.stock <= 15 ? (
           <span className="px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-rose-700 bg-rose-100 rounded-full">
             Stok Menipis
           </span>
-        )}
+        ) : null}
       </div>
 
       <button
@@ -101,15 +106,43 @@ export default function ProductCard({
         <Heart size={18} className={isFavorite ? "fill-pink-500" : ""} />
       </button>
 
-      {/* Decorative Gradient Image Box with SVG previewer */}
-      <div className={`relative h-64 ${product.image} flex items-center justify-center p-6 select-none overflow-hidden group-hover:scale-[1.02] transition-transform duration-550`}>
-        {/* Soft background sparkles circles */}
-        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/20 rounded-full blur-xl" />
-        <div className="absolute -top-10 -left-10 w-24 h-24 bg-rose-300/20 rounded-full blur-lg" />
-        
-        {/* Main interactive SVG drape artwork */}
-        <div className="w-48 h-56 flex items-center justify-center relative">
-          <HijabIcon color={selectedColor.hex} />
+      {/* Decorative Image Box with realistic photorealistic background and real-time interactive mockup */}
+      <div className="relative h-64 bg-slate-50 flex items-center justify-center select-none overflow-hidden rounded-t-3xl">
+        {selectedColor.image || product.realImage ? (
+          <img
+            src={selectedColor.image || product.realImage}
+            alt={product.name}
+            className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className={`absolute inset-0 ${product.image}`} />
+        )}
+
+        {/* Soft elegant shadow mask */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
+
+        {/* Small floating premium active color mockup preview */}
+        <div className="absolute bottom-3 right-3 w-16 h-18 bg-white/95 backdrop-blur-md rounded-2xl p-1 shadow-md border border-pink-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-350 overflow-hidden">
+          {selectedColor.image ? (
+            <img
+              src={selectedColor.image}
+              alt={selectedColor.name}
+              className="w-full h-full object-cover rounded-xl"
+              referrerPolicy="no-referrer"
+            />
+          ) : product.realImage ? (
+            <img
+              src={product.realImage}
+              alt={product.name}
+              className="w-full h-full object-cover rounded-xl"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <div className="w-full h-full relative p-1">
+              <HijabIcon color={selectedColor.hex} />
+            </div>
+          )}
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Copy, Check, CheckCircle, Clock, Send, HelpCircle, ArrowLeft } from 'lucide-react';
+import { X, Copy, Check, CheckCircle, Clock, Send, HelpCircle, ArrowLeft, Share2 } from 'lucide-react';
 import { Order } from '../types';
 import { formatRupiah } from '../data';
 
@@ -16,6 +16,7 @@ export default function InvoiceDetail({
 }: InvoiceDetailProps) {
   const [copied, setCopied] = useState(false);
   const [successPaid, setSuccessPaid] = useState(false);
+  const [shareStatus, setShareStatus] = useState<string>(''); // '', 'shared', 'copied', 'failed'
 
   if (!order) return null;
 
@@ -37,6 +38,47 @@ export default function InvoiceDetail({
       .join('%0A');
 
     return `Halo Admin Meka Hijab Store, Saya ingin konfirmasi pembayaran untuk pesanan berikut:%0A%0A*ID PESANAN:* ${order.id}%0A*Nama:* ${order.shipping.fullName}%0A*Telepon:* ${order.shipping.phone}%0A*Alamat:* ${order.shipping.address}, ${order.shipping.city}%0A%0A*Produk:*%0A${listItems}%0A%0A*Kurir:* ${order.shipping.courier}%0A*Metode Pembayaran:* ${order.payment.method}%0A%0A*TOTAL TRANSFER:* *${formatRupiah(order.total)}*%0A%0AApakah sudah terverifikasi? Terima kasih! 🌸`;
+  };
+
+  const handleShareOrder = async () => {
+    const listItems = order.items
+      .map((it) => `- ${it.product.name} (${it.selectedColor.name}) x${it.quantity}`)
+      .join('\n');
+
+    const textToShare = `Halo! Berikut adalah ringkasan pesanan di Meka Hijab Store:\n\n` +
+      `🌸 *ID PESANAN:* ${order.id}\n` +
+      `👤 *Nama Penerima:* ${order.shipping.fullName}\n` +
+      `📞 *Telepon:* ${order.shipping.phone}\n` +
+      `🚚 *Kurir:* ${order.shipping.courier}\n` +
+      `💳 *Metode Pembayaran:* ${order.payment.method}\n\n` +
+      `🛍 *Produk:*\n${listItems}\n\n` +
+      `💰 *Total Belanja:* ${formatRupiah(order.total)}\n\n` +
+      `Terima kasih! ✨`;
+
+    const shareData = {
+      title: `Ringkasan Pesanan - ${order.id}`,
+      text: textToShare,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        setShareStatus('shared');
+        setTimeout(() => setShareStatus(''), 3000);
+      } catch (error) {
+        console.error('Error sharing', error);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(textToShare);
+        setShareStatus('copied');
+        setTimeout(() => setShareStatus(''), 3000);
+      } catch (err) {
+        console.error('Clipboard copy failed', err);
+        setShareStatus('failed');
+        setTimeout(() => setShareStatus(''), 3000);
+      }
+    }
   };
 
   return (
@@ -231,23 +273,40 @@ export default function InvoiceDetail({
             </div>
           </div>
 
-          {/* Footer containing WhatsApp confirmation and Close buttons */}
+          {/* Footer containing WhatsApp confirmation, Share Order, and Close buttons */}
           <div className="p-6 border-t border-pink-50 bg-pink-50/20 flex flex-col sm:flex-row gap-2">
             <a
               id="whatsapp-confirm-link"
               href={`https://api.whatsapp.com/send?phone=6282298642131&text=${getWhatsAppMessage()}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 py-3 px-5 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold text-center text-xs shadow-md shadow-emerald-100 flex items-center justify-center gap-2 transition-all"
+              className="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold text-center text-xs shadow-md shadow-emerald-100/50 flex items-center justify-center gap-2 transition-all"
             >
               <Send size={14} />
-              <span>Kirim Konfirmasi Ke WA Admin Meka</span>
+              <span>Konfirmasi WA</span>
             </a>
+
+            <button
+              id="btn-share-order-summary"
+              onClick={handleShareOrder}
+              className="py-3 px-4 rounded-2xl bg-pink-50 hover:bg-pink-100 border border-pink-200 text-pink-700 font-bold text-xs shadow-xs transition-all duration-150 flex items-center justify-center gap-2"
+            >
+              <Share2 size={14} className="text-pink-600" />
+              <span>
+                {shareStatus === 'copied' 
+                  ? 'Salin Berhasil! 📋' 
+                  : shareStatus === 'shared' 
+                    ? 'Berhasil Dibagikan! ' 
+                    : shareStatus === 'failed'
+                      ? 'Gagal Menyalin'
+                      : 'Bagikan Pesanan'}
+              </span>
+            </button>
 
             <button
               id="invoice-footer-close"
               onClick={onClose}
-              className="py-3 px-5 rounded-2xl bg-white border border-pink-200 text-pink-600 hover:bg-pink-50 text-xs font-bold transition-all"
+              className="py-3 px-4 rounded-2xl bg-white border border-pink-200 text-pink-600 hover:bg-pink-50 text-xs font-bold transition-all"
             >
               Kembali Belanja
             </button>

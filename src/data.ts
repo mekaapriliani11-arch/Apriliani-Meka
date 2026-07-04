@@ -1,5 +1,30 @@
 import { Product } from './types';
 
+// @ts-ignore
+import pashminaSilkImg from './assets/images/pashmina_silk_1781858531943.jpg';
+// @ts-ignore
+import pashminaSilkAltImg from './assets/images/pashmina_silk_alt_1781859296748.jpg';
+// @ts-ignore
+import voalUltrafineImg from './assets/images/voal_ultrafine_1781858546782.jpg';
+// @ts-ignore
+import voalUltrafineAltImg from './assets/images/voal_ultrafine_alt_1781859309897.jpg';
+// @ts-ignore
+import bellaSquareImg from './assets/images/bella_square_1781858559896.jpg';
+// @ts-ignore
+import bellaSquareAltImg from './assets/images/bella_square_alt_1781859324686.jpg';
+// @ts-ignore
+import khimarSyariImg from './assets/images/khimar_syari_1781858571981.jpg';
+// @ts-ignore
+import khimarSyariAltImg from './assets/images/khimar_syari_alt_1781859337880.jpg';
+// @ts-ignore
+import pashminaPlisketImg from './assets/images/pashmina_plisket_1781858821932.jpg';
+// @ts-ignore
+import instantJerseyImg from './assets/images/instant_jersey_1781858839785.jpg';
+// @ts-ignore
+import voalSatinEdgeImg from './assets/images/voal_satin_edge_1781858854907.jpg';
+// @ts-ignore
+import instantOvalInnerImg from './assets/images/instant_oval_inner_1781858871137.jpg';
+
 export const products: Product[] = [
   {
     id: 'p1',
@@ -12,13 +37,14 @@ export const products: Product[] = [
     material: 'Premium Silk Armani',
     size: '180 x 75 cm',
     colors: [
-      { name: 'Dusty Pink', hex: '#E1A2B8' },
-      { name: 'Rose Gold', hex: '#B76E79' },
-      { name: 'Warm Nude', hex: '#D2B48C' },
-      { name: 'Mauve', hex: '#905E7B' },
-      { name: 'Sage Green', hex: '#8F9779' }
+      { name: 'Dusty Pink', hex: '#E1A2B8', image: pashminaSilkImg },
+      { name: 'Rose Gold', hex: '#B76E79', image: pashminaSilkImg },
+      { name: 'Warm Nude', hex: '#D2B48C', image: pashminaSilkAltImg },
+      { name: 'Mauve', hex: '#905E7B', image: pashminaSilkImg },
+      { name: 'Sage Green', hex: '#8F9779', image: pashminaSilkAltImg }
     ],
     image: 'bg-gradient-to-tr from-pink-200 to-rose-300',
+    realImage: pashminaSilkImg,
     features: ['Efek kilau mewah (Glossy)', 'Tepian jahit tepi rapi', 'Bahan jatuh dan flowy', 'Dingin dan nyaman dipakai'],
     stock: 15,
     badge: 'Terlaris'
@@ -34,13 +60,14 @@ export const products: Product[] = [
     material: 'Voal Ultrafine Grade A',
     size: '115 x 115 cm',
     colors: [
-      { name: 'Blossom Pink', hex: '#FBCFE8' },
-      { name: 'Soft Peach', hex: '#FFEDD5' },
-      { name: 'Beige Cream', hex: '#F5F5DC' },
-      { name: 'Lilac', hex: '#D8B4FE' },
-      { name: 'Slate Grey', hex: '#E2E8F0' }
+      { name: 'Blossom Pink', hex: '#FBCFE8', image: voalUltrafineImg },
+      { name: 'Soft Peach', hex: '#FFEDD5', image: voalUltrafineImg },
+      { name: 'Beige Cream', hex: '#F5F5DC', image: voalUltrafineImg },
+      { name: 'Lilac', hex: '#D8B4FE', image: voalUltrafineAltImg },
+      { name: 'Slate Grey', hex: '#E2E8F0', image: voalUltrafineAltImg }
     ],
     image: 'bg-gradient-to-tr from-rose-100 to-pink-200',
+    realImage: voalUltrafineImg,
     features: ['Pinggiran Laser Cut eksklusif', 'Tegak sempurna di dahi', 'Serat kain padat & lembut', 'Anti kusut tanpa disetrika'],
     stock: 25,
     badge: 'Eksklusif'
@@ -56,13 +83,14 @@ export const products: Product[] = [
     material: 'Double Hycon Premium',
     size: '115 x 115 cm',
     colors: [
-      { name: 'Dusty Rose', hex: '#F43F5E' },
-      { name: 'Soft Pink', hex: '#FCE7F3' },
-      { name: 'Milk Tea', hex: '#E5BA73' },
-      { name: 'Navy Blue', hex: '#1E3A8A' },
-      { name: 'Black Coal', hex: '#111827' }
+      { name: 'Dusty Rose', hex: '#F43F5E', image: bellaSquareImg },
+      { name: 'Soft Pink', hex: '#FCE7F3', image: bellaSquareImg },
+      { name: 'Milk Tea', hex: '#E5BA73', image: bellaSquareImg },
+      { name: 'Navy Blue', hex: '#1E3A8A', image: bellaSquareAltImg },
+      { name: 'Black Coal', hex: '#111827', image: bellaSquareAltImg }
     ],
     image: 'bg-gradient-to-tr from-pink-100 to-red-100',
+    realImage: bellaSquareImg,
     features: ['Sangat terjangkau', 'Neci rapi di semua sisi', 'Ringan dan menyerap keringat', 'Mudah dimodelkan apa saja'],
     stock: 50,
     badge: 'Terpopuler'
@@ -78,15 +106,16 @@ export const products: Product[] = [
     material: 'Premium Ceruty Baby Doll Dual-Layer',
     size: 'Depan 90 cm, Belakang 120 cm',
     colors: [
-      { name: 'Sakura Pink', hex: '#FFE4E1' },
-      { name: 'Deep Rose', hex: '#9E3D60' },
-      { name: 'Soft Mocca', hex: '#C68B59' },
-      { name: 'Midnight Navy', hex: '#0F172A' },
-      { name: 'Emerald', hex: '#064E3B' }
+      { name: 'Sakura Pink', hex: '#FFE4E1', image: khimarSyariImg },
+      { name: 'Deep Rose', hex: '#9E3D60', image: khimarSyariImg },
+      { name: 'Soft Mocca', hex: '#C68B59', image: khimarSyariImg },
+      { name: 'Midnight Navy', hex: '#0F172A', image: khimarSyariAltImg },
+      { name: 'Emerald', hex: '#064E3B', image: khimarSyariAltImg }
     ],
     image: 'bg-gradient-to-tr from-rose-200 to-amber-200',
+    realImage: khimarSyariImg,
     features: ['Pet Antem (Anti Tembem)', 'Desain Double Layer tidak menerawang', 'Menutup dada dan pantat', 'Tekstur pasir eksklusif'],
-    stock: 12,
+    stock: 4,
     badge: 'Syar\'i Elegant'
   },
   {
@@ -107,6 +136,7 @@ export const products: Product[] = [
       { name: 'Nude Almond', hex: '#ECCDB4' }
     ],
     image: 'bg-gradient-to-tr from-pink-100 to-purple-100',
+    realImage: pashminaPlisketImg,
     features: ['Lipatan plisket lurus konsisten', 'Tidak ada garis sambungan tengah', 'Anti kusut & anti ribet', 'Memberikan volume indah'],
     stock: 30,
     badge: 'Best Seller'
@@ -129,6 +159,7 @@ export const products: Product[] = [
       { name: 'Snow White', hex: '#FFFFFF' }
     ],
     image: 'bg-gradient-to-tr from-rose-200 to-pink-300',
+    realImage: instantJerseyImg,
     features: ['Bahan jersey melar & adem', 'Pinggiran dijahit kelim mini', 'Menutup dada secara proporsional', 'Anti pusing & menyerap keringat'],
     stock: 40,
     badge: 'Diskon'
@@ -150,8 +181,9 @@ export const products: Product[] = [
       { name: 'Deep Sage', hex: '#879F84' }
     ],
     image: 'bg-gradient-to-tr from-orange-100 to-rose-200',
+    realImage: voalSatinEdgeImg,
     features: ['Bahan Voal bernapas tinggi', 'Hiasan satin ribbon mewah', 'Ukuran lebar mudah dimodifikasi', 'Kemasan pouch eksklusif'],
-    stock: 18,
+    stock: 3,
     badge: 'Premium'
   },
   {
@@ -172,6 +204,7 @@ export const products: Product[] = [
       { name: 'Basic Black', hex: '#1A1A1A' }
     ],
     image: 'bg-gradient-to-tr from-pink-200 to-indigo-100',
+    realImage: instantOvalInnerImg,
     features: ['Sudah terjahit dengan ciput bandana', 'Ujung pashmina berbentuk oval anggun', 'Tidak menerawang di kepala', 'Sangat hemat waktu berdandan'],
     stock: 22,
     badge: 'Terlaris'
